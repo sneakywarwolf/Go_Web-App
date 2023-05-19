@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.Title}}</title>
+    <style>
+        /* Add your CSS styles here */
+
+        /* Example CSS animation */
+        .animate {
+            animation: fade-in 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Blog!</h1>
+    
+    <!-- Add your graphics or animation elements here -->
+    <img class="animate" src="/web/logo.png" alt="Sneakywarwolf Posting Soon" />
+
+    <h2>Latest Blog Posts:</h2>
+    <ul>
+        {{range .Blogs}}
+        <li><a href="{{.URL}}">{{.Title}}</a></li>
+        {{end}}
+    </ul>
+</body>
+</html>

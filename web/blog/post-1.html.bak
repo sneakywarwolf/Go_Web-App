@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>First Post</title>
+    <style>
+        body {
+            background-image: url("/images/cybersecurity.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            opacity: 0.9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>First Post</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae enim vitae elit pharetra rutrum eu eget est.
+            Fusce condimentum, ligula ut dictum efficitur, nisi est commodo ligula, vel varius elit lectus nec urna.
+            Duis porttitor leo eget est mollis, eget finibus quam efficitur.
+        </p>
+        <p>
+            Sed quis fringilla nibh. Donec euismod feugiat condimentum. Mauris ac ligula eu nisl fermentum molestie.
+            Curabitur vel iaculis justo, ut tincidunt sapien. Sed posuere turpis justo, a ultrices risus consequat in.
+        </p>
+    </div>
+</body>
+</html>
