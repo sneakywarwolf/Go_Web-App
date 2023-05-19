@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
 type Blog struct {
@@ -17,13 +15,7 @@ type Blog struct {
 }
 
 func main() {
-	router := gin.Default()
-
-	// Set up the template engine
-	router.SetHTMLTemplate(template.Must(template.ParseFiles("templates/index.html")))
-
-	// Define the route for the homepage
-	router.GET("/", func(c *gin.Context) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		blogs := getBlogs()
 
 		data := struct {
@@ -37,32 +29,27 @@ func main() {
 		tmpl, err := template.ParseFiles("templates/index.html")
 		if err != nil {
 			log.Println("Error parsing template:", err)
-			c.AbortWithStatus(http.StatusInternalServerError)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
-		err = tmpl.Execute(c.Writer, data)
+		err = tmpl.Execute(w, data)
 		if err != nil {
 			log.Println("Error executing template:", err)
-			c.AbortWithStatus(http.StatusInternalServerError)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 	})
 
-	// Serve the blog files
-	//router.StaticFS("/web", http.Dir("web")) //this wil server the whole web directory to the server
-	router.Static("/web/images", "./web/images")
-	router.Static("/web/blog", "./web/blog")
+	// Serve the static files
+	http.Handle("/web/", http.StripPrefix("/web/", http.FileServer(http.Dir("web"))))
 
 	// Start the server
-	err := router.Run(":8888")
-	if err != nil {
-		log.Fatal("Failed to start the server:", err)
-	}
+	log.Fatal(http.ListenAndServe(":8888", nil))
 }
 
 func getBlogs() []Blog {
-	blogFiles, err := filepath.Glob("./web/blog/*.html")
+	blogFiles, err := filepath.Glob("web/blog/*.html")
 	if err != nil {
 		log.Println("Error retrieving blog files:", err)
 		return nil
